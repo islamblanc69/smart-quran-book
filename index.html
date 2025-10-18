@@ -6,35 +6,30 @@
     <title>القسم الذكي | كتاب تتبع القرآن</title>
     
     <style>
-        /* --- هذا هو قسم الديزاين --- */
-        
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
             text-align: center; 
             padding-top: 50px; 
             direction: rtl;
-            
-            /* --- التغيير الأول: إضافة الخلفية --- */
-            background-image: url('background.jpg'); /* اسم الصورة التي سترفعها */
-            background-size: cover; /* لتغطية كامل الشاشة */
-            background-position: center center; /* لتوسيط الصورة */
-            background-attachment: fixed; /* لجعل الخلفية ثابتة عند التمرير */
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-attachment: fixed;
         }
         
         .container { 
             max-width: 450px; 
             margin: 0 auto;
             padding: 30px;
-            
-            /* جعل الصندوق شبه شفاف لرؤية الخلفية من ورائه */
-            background-color: rgba(255, 255, 255, 0.92); /* 92% أبيض */
-            
+            background-color: rgba(255, 255, 255, 0.92);
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            
+            /* --- التغيير 1: إخفاء الصندوق افتراضياً --- */
+            display: none; 
         }
         
-        /* --- التغيير الثاني: تغيير نوع الحقل (سنغيره في الأسفل في HTML) --- */
-        input[type="text"] { /* غيرناه من password إلى text */
+        input[type="text"] {
             width: 80%; 
             padding: 12px; 
             font-size: 16px; 
@@ -50,14 +45,12 @@
             margin-top: 20px;
             border: none;
             border-radius: 5px;
-            background-color: #007bff; /* يمكنك تغيير هذا اللون ليلائم تصميم كتابك */
+            background-color: #007bff;
             color: white;
             cursor: pointer;
             font-weight: bold;
         }
-        button:hover {
-            background-color: #0056b3;
-        }
+        button:hover { background-color: #0056b3; }
         h2 { margin-bottom: 10px; color: #333; }
         p { color: #555; font-size: 15px; line-height: 1.6; }
         #error-msg {
@@ -70,34 +63,41 @@
 </head>
 <body>
 
+    <script>
+        // هذا الكود يعمل فوراً قبل تحميل أي شيء
+        if (localStorage.getItem("quranBookAccessGranted") === "true") {
+            // المستخدم مسجل، قم بإعادة التوجيه فوراً
+            const urlParams = new URLSearchParams(window.location.search);
+            const destination = urlParams.get('content');
+            if (destination) {
+                window.location.href = destination; // إعادة توجيه سريعة
+            }
+        }
+        // إذا لم يكن مسجلاً، سيكمل تحميل الصفحة بشكل عادي
+    </script>
+
+
     <div class="container" id="gate-container">
         <h2>أهلاً بك في "القسم الذكي"</h2>
-        
         <p>لاستكمال تجربتك السمعية والبصرية، يرجى إدخال رمز التفعيل المرفق مع الكتاب مرة واحدة فقط.</p>
-        
-        <input type="text" id="secret-code" 
-               placeholder="أدخل رمز التفعيل هنا">
-        
+        <input type="text" id="secret-code" placeholder="أدخل رمز التفعيل هنا">
         <br>
-        
         <button onclick="checkCode()">تفعيل</button>
-        
         <p id="error-msg"></p>
     </div>
 
     <script>
-        // الرمز السري هو "IQRAA23"
+        // الكود الرئيسي
         const MY_SECRET_CODE = "IQRAA23";
-        
         const ACCESS_KEY = "quranBookAccessGranted";
 
-        window.onload = function() {
-            if (localStorage.getItem(ACCESS_KEY) === "true") {
-                redirectToContent();
-            } else {
-                document.getElementById("gate-container").style.display = "block";
-            }
-        };
+        // بما أننا ما زلنا في الصفحة، هذا يعني أن المستخدم "غير مسجل"
+        // قم بإظهار صندوق الدخول
+        if (localStorage.getItem(ACCESS_KEY) !== "true") {
+            document.getElementById("gate-container").style.display = "block";
+        }
+
+        // --- الدوال المساعدة (تبقى كما هي) ---
 
         function getDestination() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -105,22 +105,22 @@
         }
 
         function redirectToContent() {
+            // هذه الدالة تعمل فقط "بعد" إدخال الرمز الصحيح
             const destination = getDestination();
             if (destination) {
                 window.location.href = destination;
             } else {
-                document.body.innerHTML = `<div class="container"><h2>أهلاً بك في البوابة الرقمية لكتاب تتبع القرآن.</h2></div>`;
+                document.body.innerHTML = `<div class="container" style="display:block;"><h2>أهلاً بك في البوابة الرقمية لكتاب تتبع القرآن.</h2></div>`;
             }
         }
 
         function checkCode() {
-            // ملاحظة: جعلنا الحقل نصياً، لكننا نأخذ القيمة بنفس الطريقة
             const inputCode = document.getElementById("secret-code").value;
             const errorMsg = document.getElementById("error-msg");
 
             if (inputCode === MY_SECRET_CODE) {
                 localStorage.setItem(ACCESS_KEY, "true");
-                redirectToContent();
+                redirectToContent(); // توجيه بعد التسجيل
             } else {
                 errorMsg.textContent = "الرمز غير صحيح، يرجى المحاولة مرة أخرى.";
             }
