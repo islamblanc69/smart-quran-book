@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القسم الذكي | كتاب تتبع القرآن</title>
+    
+    <style>
+        /* هذا تصميم بسيط ومرتب، يمكنك تغييره لاحقاً إذا أردت */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            text-align: center; 
+            padding-top: 50px; 
+            background-color: #f9f9f9;
+            direction: rtl;
+        }
+        .container { 
+            max-width: 450px; 
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        input[type="password"] { 
+            width: 80%; 
+            padding: 12px; 
+            font-size: 16px; 
+            margin-top: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            text-align: center;
+        }
+        button { 
+            padding: 12px 30px; 
+            font-size: 16px; 
+            margin-top: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff; /* يمكنك تغيير هذا اللون ليلائم تصميم كتابك */
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        h2 {
+            margin-bottom: 10px;
+            color: #333;
+        }
+        p {
+            color: #555;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        #error-msg {
+            color: #d93025; /* لون أحمر للخطأ */
+            font-weight: bold;
+            margin-top: 10px;
+            min-height: 20px; /* لحجز مساحة ومنع الصفحة من "القفز" */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container" id="gate-container">
+        <h2>أهلاً بك في "القسم الذكي"</h2>
+        
+        <p>لاستكمال تجربتك السمعية والبصرية، يرجى إدخال رمز التفعيل المرفق مع الكتاب مرة واحدة فقط.</p>
+        
+        <input type="password" id="secret-code" 
+               placeholder="[5. أدخل رمز التفعيل هنا]">
+        
+        <br>
+        
+        <button onclick="checkCode()">تفعيل</button>
+        
+        <p id="error-msg"></p>
+    </div>
+
+    <script>
+        // --- 1. الرمز السري (النسخة الدائمة) ---
+        const MY_SECRET_CODE = "ALBOSMA7";
+        
+        // --- المفتاح الذي سنخزنه في المتصفح ---
+        const ACCESS_KEY = "quranBookAccessGranted"; // لا حاجة لتغيير هذا
+
+        // الدالة التي تعمل عند تحميل الصفحة
+        window.onload = function() {
+            if (localStorage.getItem(ACCESS_KEY) === "true") {
+                redirectToContent();
+            } else {
+                document.getElementById("gate-container").style.display = "block";
+            }
+        };
+
+        // دالة لقراءة الرابط (الوجهة) من كود الـ QR
+        function getDestination() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('content');
+        }
+
+        // دالة التوجيه للمحتوى
+        function redirectToContent() {
+            const destination = getDestination();
+            if (destination) {
+                // توجيه المستخدم إلى رابط الفيديو أو الصوت
+                window.location.href = destination;
+            } else {
+                // إذا فتح الصفحة مباشرة، أظهر له رسالة ترحيب
+                // --- 8. رسالة الترحيب العامة ---
+                document.body.innerHTML = `<div class="container"><h2>أهلاً بك في البوابة الرقمية لكتاب تتبع القرآن.</h2></div>`;
+            }
+        }
+
+        // دالة التحقق من الرمز عند الضغط على الزر
+        function checkCode() {
+            const inputCode = document.getElementById("secret-code").value;
+            const errorMsg = document.getElementById("error-msg");
+
+            if (inputCode === MY_SECRET_CODE) {
+                // الرمز صحيح
+                localStorage.setItem(ACCESS_KEY, "true");
+                redirectToContent();
+            } else {
+                // الرمز خاطئ
+                // --- 7. رسالة الخطأ ---
+                errorMsg.textContent = "الرمز غير صحيح، يرجى المحاولة مرة أخرى.";
+            }
+        }
+    </script>
+
+</body>
+</html>
