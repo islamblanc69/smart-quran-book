@@ -3,129 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>القسم الذكي | كتاب تتبع القرآن</title>
     
-    <style>
-        body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            text-align: center; 
-            padding-top: 50px; 
-            direction: rtl;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-attachment: fixed;
-        }
-        
-        .container { 
-            max-width: 450px; 
-            margin: 0 auto;
-            padding: 30px;
-            background-color: rgba(255, 255, 255, 0.92);
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            
-            /* --- التغيير 1: إخفاء الصندوق افتراضياً --- */
-            display: none; 
-        }
-        
-        input[type="text"] {
-            width: 80%; 
-            padding: 12px; 
-            font-size: 16px; 
-            margin-top: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-        }
-        
-        button { 
-            padding: 12px 30px; 
-            font-size: 16px; 
-            margin-top: 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover { background-color: #0056b3; }
-        h2 { margin-bottom: 10px; color: #333; }
-        p { color: #555; font-size: 15px; line-height: 1.6; }
-        #error-msg {
-            color: #d93025;
-            font-weight: bold;
-            margin-top: 10px;
-            min-height: 20px;
-        }
-    </style>
+    <title>الكتاب الذكي لحفظ القرآن الكريم</title>
+
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 </head>
 <body>
 
-    <script>
-        // هذا الكود يعمل فوراً قبل تحميل أي شيء
-        if (localStorage.getItem("quranBookAccessGranted") === "true") {
-            // المستخدم مسجل، قم بإعادة التوجيه فوراً
-            const urlParams = new URLSearchParams(window.location.search);
-            const destination = urlParams.get('content');
-            if (destination) {
-                window.location.href = destination; // إعادة توجيه سريعة
-            }
-        }
-        // إذا لم يكن مسجلاً، سيكمل تحميل الصفحة بشكل عادي
-    </script>
+    <h1>الكتاب الذكي</h1>
+    <p>لحفظ القرآن الكريم</p>
+    <p style="font-weight: bold; margin-top: 20px;">وجّه الكاميرا نحو الكود...</p>
 
+    <div id="reader" style="width: 300px; margin: auto; border: 2px solid #eee; border-radius: 8px;"></div>
 
-    <div class="container" id="gate-container">
-        <h2>أهلاً بك في "القسم الذكي"</h2>
-        <p>لاستكمال تجربتك السمعية والبصرية، يرجى إدخال رمز التفعيل المرفق مع الكتاب مرة واحدة فقط.</p>
-        <input type="text" id="secret-code" placeholder="أدخل رمز التفعيل هنا">
-        <br>
-        <button onclick="checkCode()">تفعيل</button>
-        <p id="error-msg"></p>
-    </div>
-
-    <script>
-        // الكود الرئيسي
-        const MY_SECRET_CODE = "IQRAA23";
-        const ACCESS_KEY = "quranBookAccessGranted";
-
-        // بما أننا ما زلنا في الصفحة، هذا يعني أن المستخدم "غير مسجل"
-        // قم بإظهار صندوق الدخول
-        if (localStorage.getItem(ACCESS_KEY) !== "true") {
-            document.getElementById("gate-container").style.display = "block";
-        }
-
-        // --- الدوال المساعدة (تبقى كما هي) ---
-
-        function getDestination() {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('content');
-        }
-
-        function redirectToContent() {
-            // هذه الدالة تعمل فقط "بعد" إدخال الرمز الصحيح
-            const destination = getDestination();
-            if (destination) {
-                window.location.href = destination;
-            } else {
-                document.body.innerHTML = `<div class="container" style="display:block;"><h2>أهلاً بك في البوابة الرقمية لكتاب تتبع القرآن.</h2></div>`;
-            }
-        }
-
-        function checkCode() {
-            const inputCode = document.getElementById("secret-code").value;
-            const errorMsg = document.getElementById("error-msg");
-
-            if (inputCode === MY_SECRET_CODE) {
-                localStorage.setItem(ACCESS_KEY, "true");
-                redirectToContent(); // توجيه بعد التسجيل
-            } else {
-                errorMsg.textContent = "الرمز غير صحيح، يرجى المحاولة مرة أخرى.";
-            }
-        }
-    </script>
-
+    <script src="scanner.js"></script>
 </body>
 </html>
