@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <link rel="manifest" href="manifest.json">
-    
     <title>الكتاب الذكي لحفظ القرآن الكريم</title>
 
+    <link rel="manifest" href="manifest.json">
+    
     <link rel="stylesheet" href="style.css">
     
     <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
@@ -16,9 +16,12 @@
 
     <h1>الكتاب الذكي</h1>
     <p>لحفظ القرآن الكريم</p>
-    <p style="font-weight: bold; margin-top: 20px;">وجّه الكاميرا نحو الكود...</p>
+    
 
-    <div id="reader" style="width: 300px; margin: auto; border: 2px solid #eee; border-radius: 8px;"></div>
+    <div id="reader"></div>
+
+    <button id="installButton" style="display: none;">ثبّت التطبيق للاستعمال الدائم</button>
+
 
     <script src="scanner.js"></script>
 </body>
