@@ -1,1 +1,70 @@
+/* --- ملف style.css الجديد --- */
+
+/* إعدادات عامة للصفحة */
+body {
+    /* نفس الخط المستعمل في جوجل واندرويد (روبوتو) مع خطوط عربية بديلة */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Cairo", "Tajawal", sans-serif;
+    
+    /* لون الخلفية الأساسي (أبيض مائل للرمادي الخفيف) */
+    background-color: #f4f7f6;
+    
+    /* هذا الكود يضمن أن المحتوى يجي في الوسط */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    
+    /* لون الخط الأساسي (أسود خفيف) */
+    color: #333;
+    text-align: center;
+}
+
+/* العنوان الرئيسي (اسم التطبيق) */
+h1 {
+    font-size: 2.2rem; /* حجم كبير */
+    color: #2c3e50; /* لون أسود مائل للأزرق */
+    margin-bottom: 5px;
+}
+
+/* النص الثانوي (الوصف) */
+p {
+    font-size: 1rem;
+    color: #7f8c8d; /* رمادي */
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+/* (مهم) المربع تاع السكانر */
+#reader {
+    width: 300px;
+    /* هذا يخليه مربع احترافي بظل خفيف */
+    border: 4px solid #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* باش يخلي الزوايا دائرية */
+    background-color: #eee;
+}
+
+/* (مهم) زر التثبيت الجديد */
+#installButton {
+    /* نستخدم نفس اللون الأخضر تاع صفحة الهبوط */
+    background-color: #5E9C76; 
+    
+    color: white; /* لون الخط أبيض */
+    border: none;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px; /* زوايا دائرية */
+    cursor: pointer;
+    margin-top: 25px;
+    transition: background-color 0.3s ease; /* حركة عند اللمس */
+}
+
+/* حركة عند لمس الزر */
+#installButton:hover {
+    background-color: #4a7d5e;
+}
 
