@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>قالب المصحف الذكي - تصميم عصري</title>
+    <title>قالب المصحف الذكي - اتجاه عربي صحيح</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;900&display=swap');
 
@@ -45,7 +45,7 @@
             border-radius: 8px;
         }
 
-        /* الخلفية الزخرفية السفلية الخفيفة (مستوحاة من التصميم) */
+        /* الخلفية الزخرفية السفلية */
         .page-container::after {
             content: "";
             position: absolute;
@@ -93,7 +93,6 @@
         .surah-title-badge h1 {
             font-size: 26px;
             font-weight: 900;
-            letter-spacing: 1px;
         }
 
         .left-header-box {
@@ -140,14 +139,14 @@
             border-radius: 16px;
             position: relative;
             background: #ffffff;
-            padding: 30px 20px 20px 20px;
+            padding: 35px 20px 20px 20px;
         }
 
-        /* هيدر القسم المميز الممتد للخارج */
+        /* تصحيح: الشارات ممتدة الآن من اليمين (Right) لتتوافق مع اتجاه الخط العربي */
         .box-badge {
             position: absolute;
             top: -18px;
-            left: 25px; /* ممتد جهة اليسار حسب التصميم */
+            right: 25px; 
             color: white;
             padding: 6px 20px;
             border-radius: 20px;
@@ -162,13 +161,14 @@
         .box-sub-title {
             font-size: 12px;
             color: #777;
-            text-align: center;
-            margin-top: -15px;
+            text-align: right;
+            margin-top: -10px;
             margin-bottom: 15px;
             font-weight: 500;
+            padding-right: 10px;
         }
 
-        /* تخصيص الألوان لكل قسم */
+        /* ألوان الأقسام */
         .read-box { border-color: rgba(13, 110, 90, 0.2); background: var(--bg-cream); }
         .read-box .box-badge { background-color: var(--read-color); }
 
@@ -178,7 +178,6 @@
         .write-box { border-color: rgba(192, 85, 85, 0.2); }
         .write-box .box-badge { background-color: var(--write-color); }
 
-        /* مساحات المحتوى الداخلية */
         .inner-space {
             min-height: 120px;
             display: flex;
@@ -189,21 +188,15 @@
             color: #999;
         }
 
-        /* أسطر الكتابة وقسم الترقيم الجانبي */
+        /* تصحيح: حاوية أسطر الكتابة والترقيم الجانبي من اليمين إلى اليسار */
         .write-container {
             display: flex;
+            flex-direction: row; /* الحفاظ على التدفق الطبيعي للـ RTL */
             width: 100%;
             gap: 15px;
         }
 
-        .lines-area {
-            flex-grow: 1;
-            background-image: linear-gradient(to bottom, transparent 96%, #e0e0e0 96%);
-            background-size: 100% 36px;
-            line-height: 36px;
-            min-height: 144px; /* يمثل 4 أسطر */
-        }
-
+        /* الترقيم يظهر أولاً على اليمين */
         .line-numbers {
             display: flex;
             flex-direction: column;
@@ -226,10 +219,19 @@
             background: #fff8f8;
         }
 
+        /* السطور تمتد بجانب الأرقام يساراً */
+        .lines-area {
+            flex-grow: 1;
+            background-image: linear-gradient(to bottom, transparent 96%, #e0e0e0 96%);
+            background-size: 100% 36px;
+            line-height: 36px;
+            min-height: 144px;
+        }
+
         /* ================= Footer Section ================= */
         .footer-widgets {
             display: grid;
-            grid-template-columns: 1.2fr 1.2fr 1fr;
+            grid-template-columns: 1fr 1.2fr 1.2fr; /* ترتيب الودجات من اليمين لليسار */
             gap: 20px;
             margin-top: 30px;
             z-index: 2;
@@ -271,24 +273,20 @@
             justify-content: center;
         }
 
-        /* ستايل الملاحظات */
         .notes-lines {
             background-image: linear-gradient(to bottom, transparent 95%, #eee 95%);
             background-size: 100% 25px;
             height: 50px;
         }
 
-        /* ستايل نجوم الإنجاز */
         .stars-row {
             display: flex;
             justify-content: center;
             gap: 12px;
             font-size: 24px;
             color: #ccc;
-            cursor: pointer;
         }
 
-        /* ستايل التقييم الذاتي السفلي */
         .eval-row {
             display: flex;
             justify-content: space-between;
@@ -306,16 +304,9 @@
             flex: 1;
         }
 
-        .eval-icon {
-            font-size: 16px;
-        }
+        .eval-icon { font-size: 16px; }
+        .eval-star { font-size: 14px; color: #ccc; }
 
-        .eval-star {
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        /* إعدادات الطباعة للـ A4 */
         @media print {
             body { background-color: #fff; padding: 0; }
             .page-container { box-shadow: none; margin: 0; width: 100%; height: 100%; }
@@ -326,7 +317,6 @@
 
     <div class="page-container">
         
-        <!-- الهيدر العلوي الخارجي -->
         <div class="header-container">
             <div class="header-meta">
                 <div>اليوم : .........................</div>
@@ -347,71 +337,42 @@
             🍃 اقْرَأْ • تَتَبَّعْ • اكْتُبْ • احْفَظْ 🍃
         </div>
 
-        <!-- المحتوى الرئيسي للمدونة -->
         <div class="main-content">
             
-            <!-- 1️⃣ قسم القراءة -->
             <div class="content-box read-box">
                 <div class="box-badge">📖 ١. أَقْرَأُ السُّورَةَ</div>
                 <div class="inner-space">
-                    <!-- هنا تضع نص الآيات الأصلي مستقبلاً -->
                     <span style="font-size: 15px;">[ مكان النص القرآني المطبوع بخط واضح ]</span>
                 </div>
             </div>
 
-            <!-- 2️⃣ قسم التتبع -->
             <div class="content-box trace-box">
                 <div class="box-badge">✏️ ٢. تَتَبَّعْ الْآيَاتِ</div>
                 <div class="box-sub-title">تتبّع الآيات على الحروف الباهتة</div>
                 <div class="inner-space" style="color: #e0e0e0;">
-                    <!-- هنا تضع نص الآيات بلون رمادي فاتح جداً للتتبع مستقبلاً -->
                     <span style="font-size: 15px;">[ مكان النص الباهت المخصص للتتبع ]</span>
                 </div>
             </div>
 
-            <!-- 3️⃣ قسم الكتابة من الحفظ -->
             <div class="content-box write-box">
                 <div class="box-badge">✍️ ٣. أُكْتُبْ مِنْ حِفْظِكَ</div>
                 <div class="box-sub-title">اكتب الآيات من حفظك في الفراغ</div>
                 
                 <div class="write-container">
-                    <!-- أسطر الكتابة المنقطة الواسعة -->
-                    <div class="lines-area"></div>
-                    
-                    <!-- دوائر الترقيم الجانبية للآيات كما في التصميم -->
                     <div class="line-numbers">
                         <div class="num-circle">١</div>
                         <div class="num-circle">٢</div>
                         <div class="num-circle">٣</div>
                         <div class="num-circle">٤</div>
                     </div>
+                    <div class="lines-area"></div>
                 </div>
             </div>
 
         </div>
 
-        <!-- الـ Widgets والبطاقات السفلية التفاعلية -->
         <div class="footer-widgets">
             
-            <!-- الملاحظات -->
-            <div class="widget widget-notes">
-                <div class="widget-title">📋 ملاحظات</div>
-                <div class="widget-body">
-                    <div class="notes-lines"></div>
-                </div>
-            </div>
-
-            <!-- إنجازي اليوم -->
-            <div class="widget widget-achievement">
-                <div class="widget-title">🏆 إنجازي اليوم</div>
-                <div class="widget-body">
-                    <div class="stars-row">
-                        <span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- تقييم ذاتي -->
             <div class="widget widget-evaluation">
                 <div class="widget-title">⭐ تقييم ذاتي</div>
                 <div class="widget-body">
@@ -432,6 +393,22 @@
                             <span>لم أحفظ</span>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="widget widget-achievement">
+                <div class="widget-title">🏆 إنجازي اليوم</div>
+                <div class="widget-body">
+                    <div class="stars-row">
+                        <span>☆</span><span>☆</span><span>☆</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget widget-notes">
+                <div class="widget-title">📋 ملاحظات</div>
+                <div class="widget-body">
+                    <div class="notes-lines"></div>
                 </div>
             </div>
 
