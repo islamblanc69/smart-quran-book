@@ -3,26 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>الكتاب الذكي لحفظ القرآن الكريم</title>
+    <title>قالب المصحف الذكي للأطفال</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap');
 
-    <link rel="manifest" href="manifest.json">
-    
-    <link rel="stylesheet" href="style.css">
-    
-    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+        :root {
+            --primary-gold: #D4AF37;
+            --primary-green: #2E7D32;
+            --primary-blue: #1565C0;
+            --bg-cream: #FFFDF9;
+            --text-dark: #2C3E50;
+            --border-color: #E0D4B7;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #F5F5F5;
+            color: var(--text-dark);
+            padding: 20px;
+        }
+
+        /* ضبط مقاس الصفحة للطباعة A4 */
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: white;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* الهيدر العلوي */
+        .header-section {
+            border: 3px solid var(--primary-gold);
+            border-radius: 15px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-cream);
+            margin-bottom: 20px;
+        }
+
+        .meta-data {
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 1.8;
+        }
+
+        .surah-title-box {
+            border: 4px double var(--primary-gold);
+            border-radius: 50px;
+            padding: 10px 40px;
+            background-color: white;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .surah-title-box h1 {
+            font-size: 24px;
+            color: var(--primary-green);
+            font-weight: 900;
+        }
+
+        .qr-placeholder {
+            width: 70px;
+            height: 70px;
+            border: 2px dashed #999;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 10px;
+            text-align: center;
+            color: #777;
+            background: #FAFAFA;
+        }
+
+        /* المحتوى الرئيسي (الجداول والصناديق) */
+        .main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .section-box {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            background-color: white;
+        }
+
+        .section-title {
+            background-color: var(--bg-cream);
+            padding: 8px 15px;
+            font-weight: bold;
+            font-size: 16px;
+            border-bottom: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .title-icon {
+            width: 12px;
+            height: 12px;
+            border-radius: 50px;
+            display: inline-block;
+        }
+
+        .content-area {
+            padding: 20px;
+            min-height: 180px;
+            font-size: 20px;
+            line-height: 2.5;
+            text-align: center;
+        }
+
+        /* ألوان مخصصة لكل قسم */
+        .read-section .title-icon { background-color: var(--primary-green); }
+        .trace-section .title-icon { background-color: var(--primary-gold); }
+        .write-section .title-icon { background-color: var(--primary-blue); }
+
+        /* النص الباهت للتتبع */
+        .trace-text {
+            color: #E0E0E0;
+            user-select: none;
+        }
+
+        /* الأسطر المنقطة للكتابة */
+        .dotted-lines {
+            background-image: linear-gradient(to bottom, transparent 96%, #999 96%);
+            background-size: 100% 40px;
+            line-height: 40px;
+            min-height: 200px;
+        }
+
+        /* الجزء السفلي (البطاقات الثلاثية) */
+        .footer-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
+            border-radius: 12px;
+            padding: 12px;
+            color: white;
+            font-size: 13px;
+            min-height: 110px;
+        }
+
+        .card-gold { background-color: #B59410; border: 1px solid #94780A; }
+        .card-green { background-color: #235A26; border: 1px solid #173D1A; }
+        .card-blue { background-color: #104A8F; border: 1px solid #0B3363; }
+
+        .card-title {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.3);
+            padding-bottom: 4px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* إعدادات الطباعة */
+        @media print {
+            body { background-color: white; padding: 0; }
+            .page-container { box-shadow: none; margin: 0; width: 100%; height: 100%; }
+        }
+    </style>
 </head>
 <body>
 
-    <h1>الكتاب الذكي</h1>
-    <p>لحفظ القرآن الكريم</p>
-    
+    <div class="page-container">
+        
+        <!-- الهيدر العلوي -->
+        <div class="header-section">
+            <div class="meta-data">
+                <div>اليوم: .........................</div>
+                <div>التاريخ: ..... / ..... / ..........م</div>
+                <div>عدد الآيات: ...................</div>
+            </div>
+            
+            <div class="surah-title-box">
+                <h1>سُورَةُ .................</h1>
+            </div>
+            
+            <div class="qr-placeholder">
+                QR CODE<br>الاستماع
+            </div>
+        </div>
 
-    <div id="reader"></div>
+        <!-- المحتوى الرئيسي للمدونة -->
+        <div class="main-content">
+            
+            <!-- 1️⃣ قسم القراءة -->
+            <div class="section-box read-section">
+                <div class="section-title">
+                    <span class="title-icon"></span>
+                    <span>1️⃣ أَقْرَأُ السُّورَةَ:</span>
+                </div>
+                <div class="content-area" style="background-color: var(--bg-cream);">
+                    <!-- مكان وضع النص القرآني المطبوع بخط واضح -->
+                    <p style="color: #7f8c8d; font-size: 16px;">[ ضع النص القرآني هنا خط مصحف واضح ]</p>
+                </div>
+            </div>
 
-    <button id="installButton" style="display: none;">ثبّت التطبيق للاستعمال الدائم</button>
+            <!-- 2️⃣ قسم التتبع -->
+            <div class="section-box trace-section">
+                <div class="section-title">
+                    <span class="title-icon"></span>
+                    <span>2️⃣ تَتَبَّعْ الْآيَاتِ:</span>
+                </div>
+                <div class="content-area">
+                    <!-- مكان وضع النص الباهت جداً ليقوم الطفل بالكتابة فوقه -->
+                    <p class="trace-text">[ ضع النص هنا بلون رمادي فاتح جداً للتتبع ]</p>
+                </div>
+            </div>
 
+            <!-- 3️⃣ قسم الكتابة من الحفظ -->
+            <div class="section-box write-section">
+                <div class="section-title">
+                    <span class="title-icon"></span>
+                    <span>3️⃣ اكْتُبْ مِنْ حِفْظِكَ:</span>
+                </div>
+                <div class="content-area dotted-lines">
+                    <!-- أسطر فارغة منقطة جاهزة للكتابة -->
+                </div>
+            </div>
 
-    <script src="scanner.js"></script>
+        </div>
+
+        <!-- البطاقات السفلية التفاعلية -->
+        <div class="footer-cards">
+            
+            <!-- بطاقة المعلومة -->
+            <div class="card card-gold">
+                <div class="card-title">💡 مَعْلُومَةٌ جَمِيلَةٌ</div>
+                <p>.......................................................</p>
+                <p>.......................................................</p>
+            </div>
+
+            <!-- بطاقة الإنجاز -->
+            <div class="card card-green">
+                <div class="card-title">🏆 إِنْجَازِي الْيَوْمَ</div>
+                <div>النقاط المستحقة: .................</div>
+                <div class="stars">
+                    <span>⭐</span><span>⭐</span><span>⭐</span>
+                    <span style="font-size: 11px; margin-right: 5px;">(لوّن النجوم)</span>
+                </div>
+            </div>
+
+            <!-- بطاقة التقييم الذاتي -->
+            <div class="card card-blue">
+                <div class="card-title">⭐ تَقْيِيمٌ ذَاتِيٌّ</div>
+                <div class="checkbox-group">
+                    <div class="checkbox-item"><input type="checkbox"> <span>أحفظها جيداً وبطلاقة</span></div>
+                    <div class="checkbox-item"><input type="checkbox"> <span>أحتاج إلى مراجعة بسيطة</span></div>
+                    <div class="checkbox-item"><input type="checkbox"> <span>أحتاج لتكرارها مجدداً</span></div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </body>
 </html>
